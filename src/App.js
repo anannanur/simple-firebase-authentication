@@ -7,6 +7,7 @@ const auth = getAuth(app);
 
 function App() {
   const [user, setUser] = useState({});
+  const [success,setSuccess] = useState('');
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
@@ -17,6 +18,7 @@ function App() {
         const user = result.user;
         setUser(user);
         console.log(user);
+        setSuccess('Successfully logged in');
       })
       .catch(error => {
         console.error('error', error);
@@ -37,6 +39,7 @@ function App() {
     signOut(auth)
       .then(() => {
         setUser({});
+        setSuccess('');
       })
       .catch((error) => {
         setUser({});
@@ -66,6 +69,7 @@ function App() {
           <button onClick={githubSignInBtn}>Github Sign In</button>
         </div>
       }
+      <h3 className='success'>{success}</h3>
       <h2>Name: {user.displayName}</h2>
       <p>Email: {user.email}</p>
       <img src={user.photoURL} alt="" />
